@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Подключение стилей Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Подключение стилей SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        <!-- Подключение скрипта SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+        <link rel="stylesheet" href="/style/custom.css" >
+    </head>
+    <body>
+        <!-- Навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00366d;">
+            <div class="d-flex align-items-center">
+                <div class="icon">&#x1F480;</div>
+                <span class="navbar-brand text-light" style="margin: 0 50px 0 25px; font-size: 3vh; font-weight: 600;">Больница</span>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav" style="display: none;">
+                        <li class="nav-item">
+                            <a class="nav-link" id="patientsButton" style="font-size: 18px; margin-right: 10px;" href="#">Пациенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="consultationsButton" style="font-size: 18px; margin-right: 10px;" href="#">Консультации</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="reportButton" style="font-size: 18px; margin-right: 10px;" href="#">Отчёты и статистика</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a class="nav-item nav-link text-light" href="#" id="loginLink" style="margin-left: auto; margin-right: 60px; font-size: 20px; display: block;">Вход</a>
+            <div class="dropdown" id="doctorControls"  style="margin-left: auto; margin-right: 60px; display: none;">
+                <button class="btn dropdown-toggle text-light" id="userButton" type="button" style="font-size: 20px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" style="border-color: #cbcef0; border-width: 1.5px; font-size: 20px;">
+                  <li><a class="dropdown-item" id="profileButton" style="font-weight: 500;" href="#">Профиль</a></li>
+                  <li><a class="dropdown-item" id="logoutButton" style="font-weight: 500;" href="#">Выйти</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Надпись "Медицинская карта пациента и кнопка "Добавить осмотр" -->
+        <div class="container" style="margin-top: 30px">
+            <div class="form-group">
+                <span style="font-size: 40px; font-weight: 700;">Создание осмотра</span>
+            </div>
+        </div>
+
+        <!-- Отображание первого блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <div class="form-group d-flex">
+                <div class="me-3">
+                    <span id="patientName" style="font-size: 25px; font-weight: 700;">Иванов Иван Иванович 🧑 </span>
+                </div>
+                <div style="margin-left: auto; margin-top: auto; margin-bottom: auto;">
+                    <span id="patientBirthDate" style="font-size: 20px; font-weight: 600;">Дата рождения: 06.04.1973 </span>
+                </div>
+            </div>  
+            <div class="d-flex" style="padding-bottom: 10px; font-weight: 600;">
+                <span style="margin-top: auto; margin-bottom: auto; padding-right: 10px;">Первичный осмотр</span>
+                <label class="switch" style="margin-top: auto; margin-bottom: auto;">
+                    <input type="checkbox" id="firstTimeCheckbox">
+                    <span class="slider round"></span>
+                </label>
+                <span style="padding-left: 10px; margin-top: auto; margin-bottom: auto;">Повторный осмотр</span>
+            </div>
+            <div class="form-group" style="width: 30%;">
+                <label for="inspectionDateInput1" style="padding-bottom: 10px;">Дата осмотра</label>
+                <input class="form-control" style="border-radius: 2px; border-color: rgb(168, 168, 168);" type="datetime-local" name="inspectionDate" id="inspectionDateInput1" required>
+            </div> 
+        </div>
+
+        <!-- Отображение второго блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label for="complaintInput1" style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Жалобы</label>
+            <div class="form-floating">
+                <textarea class="form-floating" type="text" name="complaint" id="complaintInput1" style="height: 70px; width: 100%; border-radius: 2px; border-color: rgb(168, 168, 168); resize: none;"></textarea>
+            </div>
+        </div>
+
+        <!-- Отображение третьего блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label for="anamnesisDeseaseInput1" style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Анамнез заболевания</label>
+            <div class="form-floating">    
+                <textarea class="form-floating" type="text" name="complaint" id="anamnesisDeseaseInput1" style="height: 70px; width: 100%; border-radius: 2px; border-color: rgb(168, 168, 168); resize: none;"></textarea>
+            </div>
+        </div>
+
+        <!-- Отображение четвёртого блока блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Консультация</label>
+            <div class="d-flex">
+                <div class="form-group me-3">
+                    <label class="switch" style="vertical-align: middle;">
+                        <input type="checkbox" id="needConsultationCheckbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <span style="padding-left: 10px; font-weight: 600; font-size: 20px;">Требуется консультация</span>
+                </div>
+                <div class="form-group" style="width: 75%; margin-left: auto;">
+                    <select class="form-select" id="consultationSpecialityAdd" style="border-radius: 2px; border-color: rgb(168, 168, 168);">
+                        <option value="" selected>Специализация консультанта</option>
+                        <option value="e8f93a49-b93f-47f0-a912-08dbffad6d0e">Акушер-гинеколог</option>
+                        <option value="302d5c0c-5623-4810-a913-08dbffad6d0e">Анестезиолог-реаниматолог</option>
+                        <option value="2c4b19f5-511d-4f27-a914-08dbffad6d0e">Дерматовенеролог</option>
+                        <option value="4676b2f4-de54-4fce-a915-08dbffad6d0e">Инфекционист</option>
+                        <option value="b0f1d7c7-18e5-488b-a916-08dbffad6d0e">Кардиолог</option>
+                        <option value="6cb7fe40-bafe-49bc-a917-08dbffad6d0e">Невролог</option>
+                        <option value="75735935-74d3-4fa2-a918-08dbffad6d0e">Онколог</option>
+                        <option value="ed1b936e-9c67-4da6-a919-08dbffad6d0e">Отоларинголог</option>
+                        <option value="87a9c38c-0d2d-4a52-a91a-08dbffad6d0e">Офтальмолог</option>
+                        <option value="5aa83ee6-9bb0-4afe-a91b-08dbffad6d0e">Психиатр</option>
+                        <option value="6c20f45d-a7d1-4605-a91c-08dbffad6d0e">Психолог</option>
+                        <option value="dfcc00ff-6595-41ad-a91d-08dbffad6d0e">Рентгенолог</option>
+                        <option value="bf1f4b00-cf9c-48e4-a91e-08dbffad6d0e">Стоматолог</option>
+                        <option value="9ea305d2-b1f8-405e-a91f-08dbffad6d0e">Терапевт</option>
+                        <option value="d82c6890-d26d-450b-a920-08dbffad6d0e">УЗИ-специалист</option>
+                        <option value="2e73cece-5fda-4211-a921-08dbffad6d0e">Уролог</option>
+                        <option value="bec96e6f-8673-47c9-a922-08dbffad6d0e">Хирург</option>
+                        <option value="15e97e43-315c-44b5-a923-08dbffad6d0e">Эндокринолог</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="consultationCommentInput1" style="padding-bottom: 10px; color: rgb(114, 114, 114);">Комментарий</label>
+                <div class="form-floating">    
+                    <textarea class="form-floating" type="text" name="complaint" id="consultationCommentInput1" style="height: 70px; width: 100%; border-radius: 2px; border-color: rgb(168, 168, 168); resize: none;"></textarea>
+                </div>
+            </div>
+            <button type="submit" id="addConsultationButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 3px; width: fit-content;"> + Добавить консультацию</button>
+        </div>
+
+        <!-- Отображение пятого блока блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Диагнозы</label>
+            <div class="form-group" id="diagnos_box"></div>
+            <div class="form-group"> 
+                <label for="typeDesease" style="padding-bottom: 10px; color: rgb(114, 114, 114);">Болезни</label>
+                <select class="form-select" id="consultationSpecialityAdd" style="border-radius: 2px; border-color: rgb(168, 168, 168); margin-bottom: 10px;">
+
+                </select>
+                <input class="form-control" id="deseaseDescription" style="border-radius: 2px; border-color: rgb(168, 168, 168); margin-top: 10px;">
+            </div>
+            <div class="form-group">
+                <label for="typeDiagnosesInput1" style="padding-bottom: 10px; color: rgb(114, 114, 114);">Тип диагноза в осмотре</label>
+                <div class="d-flex">
+                    <div class="form-check" style="margin-top: auto; margin-bottom: 10px; margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="diagnosRadio" id="flexRadioDiagnosInput1">
+                        <label class="form-check-label" for="flexRadioDiagnosInput1">Основной</label>
+                    </div>
+                    <div class="form-check" style="margin-top: auto; margin-bottom: 10px; margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="diagnosRadio" id="flexRadioDiagnosInput2" checked>
+                        <label class="form-check-label" for="flexRadioDiagnosInput2">Сопутствующий</label>
+                    </div>
+                    <div class="form-check" style="margin-top: auto; margin-bottom: 10px; margin-left: 10px;">
+                        <input class="form-check-input" type="radio" name="diagnosRadio" id="flexRadioDiagnosInput3">
+                        <label class="form-check-label" for="flexRadioDiagnosInput3">Осложнение</label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="addDiagnosButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 3px; width: fit-content;"> + Добавить диагноз</button>
+        </div>
+
+        <!-- Отображение шестого блока блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label for="healingRecomendInput1" style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Рекомендации по лечению</label>
+            <div class="form-floating">    
+                <textarea class="form-floating" type="text" name="complaint" id="healingRecomendInput1" style="height: 70px; width: 100%; border-radius: 2px; border-color: rgb(168, 168, 168); resize: none;"></textarea>
+            </div>
+        </div>
+
+        <!-- Отображение седьмого блока при создании осмотра -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px; padding: 15px; margin-top: 15px;">
+            <label style="padding-bottom: 10px; font-size: 25px; font-weight: 700; color: rgb(51, 87, 163);">Заключение</label>
+            <div class="d-flex">
+                <div class="form-group me-3" style="width: 34%;">
+                    <label for="conclusionInput1" style="padding-bottom: 10px; color: rgb(114, 114, 114);">Заключение</label>
+                    <select class="form-select" id="conclusionInput1" style="border-radius: 2px; border-color: rgb(168, 168, 168);" required>
+                        <option value="Disease">Болезнь</option>
+                        <option value="Recovery">Выздоровление</option>
+                        <option value="Death">Смерть</option>
+                    </select>
+                </div>
+                <div class="form-group" style="width: 34%;">
+                    <label for="inspectionNextDateInput1" style="padding-bottom: 10px; color: rgb(114, 114, 114);">Дата следующего визита</label>
+                    <input class="form-control" style="border-radius: 2px; border-color: rgb(168, 168, 168);" type="datetime-local" name="inspectionDate" id="inspectionNextDateInput1" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Отображение кнопок в конце формы создания осмотра -->
+        <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
+            <button type="submit" id="saveInspectionButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 3px; width: fit-content;">Сохранить осмотр</button>
+            <button type="button" id="cancelInspectionButton" class="btn btn-secondary btn-lg btn-block" style="border-radius: 3px; width: fit-content; margin-left: 10px;">Отмена</button>
+        </div>
+        
+    </body>
+    <!-- Подключение скриптов Bootstrap (необходимо для работы интерактивных элементов) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script type="module" src="/js/create_inspection.mjs"></script>
+    <script src="/js/links.js"></script>
+    <script src="/js/logout.js"></script>
+</html>

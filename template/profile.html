@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Подключение стилей Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Подключение стилей SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        <!-- Подключение скрипта SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+        <link rel="stylesheet" href="../style/custom.css" >
+    </head>
+    <body>
+       <!-- Навигационная панель -->
+       <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00366d;">
+            <div class="d-flex align-items-center">
+                <div class="icon">&#x1F480;</div>
+                <span class="navbar-brand text-light" style="margin: 0 50px 0 25px; font-size: 3vh; font-weight: 600;">Больница</span>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="patientsButton" style="font-size: 18px; margin-right: 10px;" href="#">Пациенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="consultationButton" style="font-size: 18px; margin-right: 10px;" href="#">Консультации</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="reportButton" style="font-size: 18px; margin-right: 10px;" href="#">Отчёты и статистика</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a class="nav-item nav-link text-light" href="#" id="loginLink" style="margin-left: auto; margin-right: 60px; font-size: 20px; display: none;">Вход</a>
+            <div class="dropdown" id="doctorControls"  style="margin-left: auto; margin-right: 60px;">
+                <button class="btn dropdown-toggle text-light" id="userButton" type="button" style="font-size: 20px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" style="border-color: #cbcef0; border-width: 1.5px; font-size: 20px;">
+                <li><a class="dropdown-item" id="profileButton" style="font-weight: 500;" href="#">Профиль</a></li>
+                <li><a class="dropdown-item" id="logoutButton" style="font-weight: 500;" href="#">Выйти</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Форма профиля доктора -->
+        <form class="form" style="margin-top: 15vh; max-width: 700px;">
+            <h1 class="form-title">Профиль</h1>
+            <div class="form-group">
+                <label for="doctorInputName1">Имя</label>
+                <input type="text" class="form-control" id="doctorInputName1" placeholder="Иванов Иван Иванович" required>
+            </div>
+            <div class="form-group d-flex">
+                <div class="me-3" style="width: 50%;">
+                    <label for="doctorInputGender1">Пол</label>
+                    <select class="form-select" id="doctorInputGender1" required>
+                        <option value="Male">Мужской</option>
+                        <option value="Female">Женский</option>
+                    </select>
+                </div>
+                <div style="width: 50%;">
+                    <label for="doctorInputBirthDate1">Дата рождения</label>
+                    <input class="form-control" type="date" id="doctorInputBirthDate1" name ="birthDate" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="doctorInputPhone1">Телефон</label>
+                <input type="tel" class="form-control" id="doctorInputPhone1" placeholder="+7 (xxx) xxx xx-xx" required>
+                <div id="error-message-phone" style="color: red;"></div>
+            </div>
+            <div class="form-group">
+                <label for="doctorInputEmail1">Email</label>
+                <input type="email" class="form-control" id="doctorInputEmail1" aria-describedby="emailHelp" placeholder="name@example.com" required>
+                <div id="error-message-email" style="color: red;"></div>
+            </div>
+            <button type="submit" id="saveChangesButton" class="btn btn-primary btn-lg btn-block" >Сохранить изменения</button>
+        </form>
+
+
+
+
+
+        <!-- Подключение скриптов Bootstrap (необходимо для работы интерактивных элементов) -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="../js/profileDetails.js"></script>
+        <script type="module" src="/js/links.mjs"></script>
+        <script src="../js/logout.js"></script>
+  </body>
+</html>

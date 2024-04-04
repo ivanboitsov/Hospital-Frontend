@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Подключение стилей Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Подключение стилей SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        <!-- Подключение скрипта SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+        <link rel="stylesheet" href="../style/custom.css" >
+    </head>
+    <body>
+        <!-- Навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00366d;">
+            <div class="d-flex align-items-center">
+                <div class="icon">&#x1F480;</div>
+                <span class="navbar-brand text-light" style="margin: 0 50px 0 25px; font-size: 3vh; font-weight: 600;">Больница</span>
+                <div style="display: none;" id="authorizeButton">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 18px; margin-right: 10px;" href="#">Пациенты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 18px; margin-right: 10px;" href="#">Консультации</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="font-size: 18px; margin-right: 10px;" href="#">Отчёты и статистика</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <a class="nav-item nav-link text-light" href="#" id="loginLink" style="margin-left: auto; margin-right: 60px; font-size: 20px;">Вход</a>
+            <div class="dropdown" id="doctorControls"  style="margin-left: auto; margin-right: 60px; display: none;">
+                <button class="btn dropdown-toggle text-light" id="userButton" type="button" style="font-size: 20px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" style="border-color: #cbcef0; border-width: 1.5px; font-size: 20px;">
+                    <li><a class="dropdown-item" id="profileButton" style="font-weight: 500;" href="#">Профиль</a></li>
+                    <li><a class="dropdown-item" id="logoutButton" style="font-weight: 500;" href="#">Выйти</a></li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <!-- Форма регистрации -->
+        <form class="form" style="margin-top: 5vh;">
+            <h1 class="form-title">Регистрация</h1>
+            <div class="form-group">
+                <label for="exampleInputName1">Имя</label>
+                <input type="text" class="form-control" id="exampleInputName1" placeholder="Иванов Иван Иванович" required>
+            </div>
+            <div class="form-group d-flex">
+                <div class="me-3" style="width: 50%;">
+                    <label for="exampleInputGender1">Пол</label>
+                    <select class="form-select" id="exampleInputGender1" required>
+                        <option value="Male">Мужской</option>
+                        <option value="Female">Женский</option>
+                    </select>
+                </div>
+                <div style="width: 50%;">
+                    <label for="exampleInputBirthDate1">Дата рождения</label>
+                    <input class="form-control" type="date" id="exampleInputBirthDate1" name ="birthDate" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPhone1">Телефон</label>
+                <input type="tel" class="form-control" id="exampleInputPhone1" placeholder="+7 (xxx) xxx xx-xx" required>
+                <div id="error-message-phone" style="color: red;"></div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputSpeciality1">Специальность</label>
+                <select class="form-select" id="exampleInputSpeciality1" required>
+                    <option value="e8f93a49-b93f-47f0-a912-08dbffad6d0e">Акушер-гинеколог</option>
+                    <option value="302d5c0c-5623-4810-a913-08dbffad6d0e">Анестезиолог-реаниматолог</option>
+                    <option value="2c4b19f5-511d-4f27-a914-08dbffad6d0e">Дерматовенеролог</option>
+                    <option value="4676b2f4-de54-4fce-a915-08dbffad6d0e">Инфекционист</option>
+                    <option value="b0f1d7c7-18e5-488b-a916-08dbffad6d0e">Кардиолог</option>
+                    <option value="6cb7fe40-bafe-49bc-a917-08dbffad6d0e">Невролог</option>
+                    <option value="75735935-74d3-4fa2-a918-08dbffad6d0e">Онколог</option>
+                    <option value="ed1b936e-9c67-4da6-a919-08dbffad6d0e">Отоларинголог</option>
+                    <option value="87a9c38c-0d2d-4a52-a91a-08dbffad6d0e">Офтальмолог</option>
+                    <option value="5aa83ee6-9bb0-4afe-a91b-08dbffad6d0e">Психиатр</option>
+                    <option value="6c20f45d-a7d1-4605-a91c-08dbffad6d0e">Психолог</option>
+                    <option value="dfcc00ff-6595-41ad-a91d-08dbffad6d0e">Рентгенолог</option>
+                    <option value="bf1f4b00-cf9c-48e4-a91e-08dbffad6d0e">Стоматолог</option>
+                    <option value="9ea305d2-b1f8-405e-a91f-08dbffad6d0e">Терапевт</option>
+                    <option value="d82c6890-d26d-450b-a920-08dbffad6d0e">УЗИ-специалист</option>
+                    <option value="2e73cece-5fda-4211-a921-08dbffad6d0e">Уролог</option>
+                    <option value="bec96e6f-8673-47c9-a922-08dbffad6d0e">Хирург</option>
+                    <option value="15e97e43-315c-44b5-a923-08dbffad6d0e">Эндокринолог</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="name@example.com" required>
+                <div id="error-message-email" style="color: red;"></div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Пароль</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" required>
+                <div id="error-message-password" style="color: red;"></div>
+            </div>
+            <button type="submit" id="registerButton" class="btn btn-primary btn-lg btn-block" >Зарегистрироваться</button>
+        </form>
+
+
+        <!-- Подключение скриптов Bootstrap (необходимо для работы интерактивных элементов) -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <script src="../js/navigation.js"></script>
+        <script src="../js/registration.js"></script>
+  </body>
+</html>

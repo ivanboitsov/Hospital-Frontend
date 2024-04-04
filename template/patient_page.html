@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Подключение стилей Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <!-- Подключение стилей SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        <!-- Подключение скрипта SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+        <link rel="stylesheet" href="../style/custom.css" >
+    </head>
+    <body>
+        <!-- Навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00366d;">
+            <div class="d-flex align-items-center">
+                <div class="icon">&#x1F480;</div>
+                <span class="navbar-brand text-light" style="margin: 0 50px 0 25px; font-size: 3vh; font-weight: 600;">Больница</span>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="patientsButton" style="font-size: 18px; margin-right: 10px;" href="#">Пациенты</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="consultationButton" style="font-size: 18px; margin-right: 10px;" href="#">Консультации</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="reportButton" style="font-size: 18px; margin-right: 10px;" href="#">Отчёты и статистика</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <a class="nav-item nav-link text-light" href="#" id="loginLink" style="margin-left: auto; margin-right: 60px; font-size: 20px; display: none;">Вход</a>
+            <div class="dropdown" id="doctorControls"  style="margin-left: auto; margin-right: 60px;">
+                <button class="btn dropdown-toggle text-light" id="userButton" type="button" style="font-size: 20px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                <ul class="dropdown-menu" style="border-color: #cbcef0; border-width: 1.5px; font-size: 20px;">
+                  <li><a class="dropdown-item" id="profileButton" style="font-weight: 500;" href="#">Профиль</a></li>
+                  <li><a class="dropdown-item" id="logoutButton" style="font-weight: 500;" href="#">Выйти</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        <div class="container" style="margin-top: 30px">
+            <div class="form-group d-flex">
+                <div class="me-3">
+                    <span style="font-size: 40px; font-weight: 700;">Пациенты</span>
+                </div>
+                <div style="margin-top: auto; margin-bottom: auto; margin-left: auto;">
+                    <button id="registerNewPatientButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 5px; font-size: 18px;">+ Регистрация нового пациента</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для регистрации пациента -->
+        <div id="registrationModal" class="modal" style="background-color: #3144ee8c;">
+            <form class="modal-dialog modal-dialog-centered">
+                <!-- Форма регистрации пациента  -->
+                <div class="modal-content" style="background-color: #e7eaff; padding: 20px;">
+                    <h1 class="form-title">Регистрация пациента</h1>
+                    <div class="form-group">
+                        <label for="patientExampleInputName1">Имя</label>
+                        <input type="text" class="form-control" id="patientExampleInputName1" placeholder="Иванов Иван Иванович" required>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div class="me-3" style="width: 50%;">
+                            <label for="patientExampleInputGender1">Пол</label>
+                            <select class="form-select" id="patientExampleInputGender1" required>
+                                <option value="Male">Мужской</option>
+                                <option value="Female">Женский</option>
+                            </select>
+                        </div>
+                        <div style="width: 50%;">
+                            <label for="patientExampleInputBirthDate1">Дата рождения</label>
+                            <input class="form-control" type="date" id="patientExampleInputBirthDate1" name ="birthDate" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="registerPatientButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 5px;">Зарегистрировать</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Фильтры и сортировка -->
+        <div class="container" style="background-color: #e2e5f8; border-radius: 6px;">
+            <div style="padding-top: 5px; padding-bottom: 10px;">
+                <span style="font-size: 25px; font-weight: 700;">Фильтры и сортировка</span>
+            </div>
+            <div class="d-flex">
+                <div class="form-group me-3" style="width: 50%;">
+                    <label for="patientSearchName1" style="padding-bottom: 5px;">Имя</label>
+                    <input type="text" class="form-control" id="patientSearchName1" placeholder="Иванов Иван Иванович">
+                </div>
+                <div class="form-group" style="width: 50%;">
+                    <label for="patientConclusionSelect1" style="padding-bottom: 5px;">Имеющиеся заключения</label>
+                    <select class="form-select" id="patientConclusionSelect1">
+                        <option value="" selected>Выберите заключение</option>
+                        <option value="Disease">Болезнь</option>
+                        <option value="Recovery">Выздоровление</option>
+                        <option value="Death">Смерть</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="form-group" style="width: 40%; margin: auto;">
+                    <div class="d-flex">
+                        <label class="switch" style="margin-top: auto; margin-bottom: auto;">
+                            <input type="checkbox" id="scheduledVisitsCheckbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span style="padding-left: 10px; margin-top: auto; margin-bottom: auto;">Есть запланированные визиты</span>
+                    </div>
+                </div>
+                <div class="form-group" style="width: 35%; margin: auto">
+                    <div class="d-flex">
+                        <label class="switch" style="margin-top: auto; margin-bottom: auto;">
+                            <input type="checkbox" id="onlyMineCheckbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span style="padding-left: 10px; margin-top: auto; margin-bottom: auto;">Мои пациенты</span>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-left: auto; width: 25%;">
+                    <label for="patientSortSelect1" style="padding-bottom: 5px;">Сортировка пациентов</label>
+                    <select class="form-select" id="patientSortSelect1">
+                        <option value="NameAsc">По имени (А-Я)</option>
+                        <option value="NameDesc">По имени (Я-А)</option>
+                        <option value="CreateDesc">По дате создания (сначала новые)</option>
+                        <option value="CreateAsc">По дате создания (сначала старые)</option>
+                        <option value="InspectionAsc">По дате осмотров (сначала новые)</option>
+                        <option value="InspectionDesc">По дате осмотров (снача старые)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="form-group">
+                    <label for="patientPageCountSelect1" style="padding-bottom: 5px;">Число пациентов на странице</label>
+                    <select class="form-select" id="patientPageCountSelect1">
+                        <option value="1">1</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+                <div style="margin-left: auto; width: 20%; margin-top: auto; margin-bottom: auto;">
+                    <button id="searchButton" class="btn btn-primary btn-lg btn-block" style="border-radius: 5px; font-size: 18px;">Поиск</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Отображение пациентов на странице пациентов -->
+        <div class="container" style="padding: 0;" id="patients_box"></div>
+        
+        <!-- Отображение пагинации на странице пациентов -->
+        <div class="container" style="text-align: center; margin-top: 10px;">
+            <nav aria-label="Page navigation example" style="display: inline-block;">
+                <ul id="pagination_main" class="pagination">
+                    <li class="page-item" style="display: none;">
+                    <a class="page-link pagination-button" href="#" aria-label="Previous">
+                        <span aria-hidden="true"><</span>
+                    </a>
+                    </li>
+                    <li class="page-item" style="display: none;"><a class="page-link pagination-button" href="#">1</a></li>
+                    <li class="page-item" style="display: none;"><a class="page-link pagination-button" href="#">2</a></li>
+                    <li class="page-item" style="display: none;"><a class="page-link pagination-button" href="#">3</a></li>
+                    <li class="page-item" style="display: none;"><a class="page-link pagination-button" href="#">4</a></li>
+                    <li class="page-item" style="display: none;"><a class="page-link pagination-button" href="#">5</a></li>
+                    <li class="page-item" style="display: none;">
+                    <a class="page-link pagination-button" href="#" aria-label="Next">
+                        <span aria-hidden="true">></span>
+                    </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+    </body>
+    <!-- Подключение скриптов Bootstrap (необходимо для работы интерактивных элементов) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script type="module" src="../js/patient_page.mjs"></script>
+    <script type="module" src="../js/links.mjs"></script>
+    <script src="../js/patients_registrations.js"></script>
+    <script src="../js/logout.js"></script>
+</html>
